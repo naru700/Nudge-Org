@@ -1,0 +1,29 @@
+.history {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  //max-height: calc(100vh - 200px); // adjust if needed
+  overflow-y: auto;
+  scrollbar-width: thin;
+
+li {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+    background-color: #f7f9fc;
+    border-radius: 6px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    strong {
+      display: block;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+<h3>AI Insights</h3>
+<hr />
+
+<form (ngSubmit)="submitQuestion()">
+  <div class="footer-input">
+    <input
+      #questionInput
+      pInputText
+      type="text"
+      name="question"                            
+      [(ngModel)]="userQuestion"                 
+      autocomplete="off"
+      placeholder="Have a different question? ask here..."
+    />
+    <button
+      type="submit"
+      pButton
+      label="Send"
+      class="p-button-primary"
+      [disabled]="!userQuestion.trim() || loading"
+    ></button>
+  </div>
+</form>
+
+<div class="ai-answer-box">
+  <ng-container *ngIf="loading; else answerBlock">
+    <p class="loading">🕐 Generating answer...</p>
+  </ng-container>
+  <ng-template #answerBlock>
+    <p *ngIf="aiAnswer">{{ aiAnswer }}</p>
+  </ng-template>
+</div>

@@ -1,0 +1,32 @@
+.session-layout {
+  display: flex;
+  height: calc(100vh - 4rem); // Adjust based on header height
+  gap: 1rem;
+  padding: 0.5rem 1rem 1rem; // Removed top padding
+  overflow-y: auto;
+}
+
+.panel {
+  padding: 1rem;
+  margin: 0; // Make sure no extra margin is added
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+}
+
+
+.transcript {
+  flex: 1; // 25%
+  background-color: #f5faff;
+}
+
+.answer {
+  flex: 2; // 50%
+  background-color: #fefefe;
+}
+
+.history {
+  flex: 1; // 25%
+  background-color: #f9f9f9;
+}

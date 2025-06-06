@@ -1,0 +1,26 @@
+<video #screenVideo class="video-box" autoplay muted></video>
+
+<div class="button-row">
+  <button
+    pButton
+    label="Share Screen"
+    icon="pi pi-desktop"
+    class="p-button-sm p-button-primary"
+    (click)="startScreenShare()"
+  ></button>
+
+  <button
+    pButton
+    [label]="micActive ? 'Mic On' : 'Mic Off'"
+    [icon]="micActive ? 'pi pi-microphone' : 'pi pi-microphone-slash'"
+    [class]="micActive ? 'p-button-sm p-button-success' : 'p-button-sm p-button-secondary'"
+    (click)="toggleMicrophone()"
+  ></button>
+</div>
+
+<!--<h4 class="section-title">Live Transcription</h4>-->
+
+<div class="transcript-box">
+  <p *ngFor="let line of transcriptLines">{{ line }}</p>
+  <p *ngIf="!transcriptLines.length">Waiting for session to start...</p>
+</div>

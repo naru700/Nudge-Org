@@ -1,0 +1,6 @@
+<h3>Previous Questions</h3>
+<ul class="history">
+<li *ngFor="let q of history$ | async" (click)="onSelect(q.question)">
+  {{ q.question }}
+</li>
+</ul>
