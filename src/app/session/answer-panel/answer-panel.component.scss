@@ -11,7 +11,7 @@
   border-radius: 8px;
   margin-bottom: 1rem;
   overflow-y: auto;
- // min-height: 100px;
+  // min-height: 100px;
   font-size: 0.95rem;
   transition: all 0.3s ease;
 
@@ -41,4 +41,27 @@ input[pInputText] {
 .footer-input button {
   height: 44px;
   white-space: nowrap;
+}
+
+.mic-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 0.5rem;
+  margin-top: 0.4rem;
+  background-color: red;
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
 }

@@ -9,18 +9,26 @@
     (click)="startScreenShare()"
   ></button>
 
-  <button
+ <button
     pButton
     [label]="micActive ? 'Mic On' : 'Mic Off'"
     [icon]="micActive ? 'pi pi-microphone' : 'pi pi-microphone-slash'"
-    [class]="micActive ? 'p-button-sm p-button-success' : 'p-button-sm p-button-secondary'"
+    [ngClass]="micActive ? 'p-button-sm p-button-success' : 'p-button-sm p-button-secondary'"
     (click)="toggleMicrophone()"
+    type="button"
   ></button>
+
+  <!-- Mic status dot -->
+<span *ngIf="micActive" class="mic-indicator" title="Microphone On"></span>
+
 </div>
 
 <!--<h4 class="section-title">Live Transcription</h4>-->
 
 <div class="transcript-box">
   <p *ngFor="let line of transcriptLines">{{ line }}</p>
-  <p *ngIf="!transcriptLines.length">Waiting for session to start...</p>
+  <p *ngIf="currentInterimLine">{{ currentInterimLine }}</p>
+  <p *ngIf="!transcriptLines.length && !currentInterimLine">
+    Waiting for session to start...
+  </p>
 </div>
