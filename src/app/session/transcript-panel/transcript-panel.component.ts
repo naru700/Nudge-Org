@@ -125,22 +125,4 @@ export class TranscriptPanelComponent implements OnInit {
         });
     }
   }
-
-  submitToInsights(): void {
-    const lastLine = this.transcriptLines.at(-1);
-    if (!lastLine) return;
-
-    console.log('Sending to AI Insights:', lastLine);
-
-    fetch('http://127.0.0.1:8000/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question: lastLine }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('AI Response:', data);
-      })
-      .catch((err) => console.error('Error sending to insights:', err));
-  }
 }
