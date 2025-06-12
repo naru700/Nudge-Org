@@ -18,8 +18,14 @@ export class AnswerPanelComponent implements AfterViewInit {
   loading = false;
 
   @ViewChild('questionInput') questionInput!: ElementRef;
+  
 
-  constructor(private sessionService: SessionService) {}
+  constructor(private sessionService: SessionService) {
+    this.sessionService.question$.subscribe((q) => {
+    this.userQuestion = q;
+    this.submitQuestion();
+  });
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {

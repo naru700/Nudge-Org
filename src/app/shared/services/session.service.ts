@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
   private historySubject = new BehaviorSubject<{ question: string, answer: string }[]>([]);
   history$ = this.historySubject.asObservable();
+
+  question$ = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 

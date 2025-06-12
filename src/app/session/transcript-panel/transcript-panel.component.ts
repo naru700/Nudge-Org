@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { SessionService } from '../../shared/services/session.service';
 
 @Component({
   selector: 'app-transcript-panel',
@@ -23,9 +24,18 @@ export class TranscriptPanelComponent implements OnInit {
   recognition: any = null; 
   transcriptLines: string[] = [];
   currentInterimLine: string = '';
+  lastFinalLine: string = '';
+  
+  constructor(private cd: ChangeDetectorRef, private sessionService: SessionService) {}
 
-  constructor(private cd: ChangeDetectorRef) {}
-
+  submitToInsights() {
+    const toSend = this.currentInterimLine.trim() || this.lastFinalLine.trim();
+    if (toSend) {
+      this.sessionService.question$.next(toSend);
+      this.lastFinalLine = '';
+    }
+  }
+  
   ngOnInit(): void {
 
     window.addEventListener('keydown', (e) => {
@@ -96,8 +106,11 @@ export class TranscriptPanelComponent implements OnInit {
 
               if (final) {
                 this.transcriptLines.push(final);
+                this.lastFinalLine = final; 
                 this.currentInterimLine = '';
-              } else {
+               // this.sessionService.question$.next(final); //  auto-trigger answer
+                }
+              else {
                 this.currentInterimLine = interim + '...';
               }
 

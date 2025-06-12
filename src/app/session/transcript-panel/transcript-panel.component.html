@@ -12,14 +12,13 @@
  <button
     pButton
     [label]="micActive ? 'Mic On' : 'Mic Off'"
-    [icon]="micActive ? 'pi pi-microphone' : 'pi pi-microphone-slash'"
+    [icon]="'pi pi-microphone'"
     [ngClass]="micActive ? 'p-button-sm p-button-success' : 'p-button-sm p-button-secondary'"
     (click)="toggleMicrophone()"
     type="button"
   ></button>
+    <span *ngIf="micActive" class="mic-indicator" title="Microphone On"></span>
 
-  <!-- Mic status dot -->
-<span *ngIf="micActive" class="mic-indicator" title="Microphone On"></span>
 
 </div>
 
