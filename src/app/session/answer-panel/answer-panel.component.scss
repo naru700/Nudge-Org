@@ -8,9 +8,9 @@
   flex: 1;
   padding: 1rem;
   background-color: #f4f6fa;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  border-radius: 0.5rem; 
   overflow-y: auto;
+
   font-size: 0.95rem;
   transition: all 0.3s ease;
 
@@ -25,12 +25,12 @@
   display: flex;
   gap: 0.5rem;
   padding: 1rem;
-  border-top: 1px solid #eee;
+  border-top: 0.0625rem solid #eee; 
 }
 
 input[pInputText] {
   flex: 1;
-  min-height: 44px;
+  min-height: 2.75rem; 
   padding: 0.5rem;
   font-size: 0.95rem;
   line-height: 1.2;
@@ -38,6 +38,7 @@ input[pInputText] {
 }
 
 .footer-input button {
-  height: 44px;
+  height: 2.75rem; 
   white-space: nowrap;
 }
+
