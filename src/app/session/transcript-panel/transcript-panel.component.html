@@ -25,9 +25,8 @@
 <!--<h4 class="section-title">Live Transcription</h4>-->
 
 <div class="transcript-box">
-  <p *ngFor="let line of transcriptLines">{{ line }}</p>
-  <p *ngIf="currentInterimLine">{{ currentInterimLine }}</p>
-  <p *ngIf="!transcriptLines.length && !currentInterimLine">
-    Waiting for session to start...
-  </p>
+  <ng-container *ngFor="let line of transcriptLines">
+    <p>{{ line }}</p>
+  </ng-container>
+  <p *ngIf="currentInterimLine" class="interim-line">{{ currentInterimLine }}</p>
 </div>
