@@ -1,32 +1,32 @@
-<video #screenVideo class="video-box" autoplay muted></video>
+<div class="panel-content">
+  <video #screenVideo class="video-box" autoplay muted></video>
 
-<div class="button-row">
-  <button
-    pButton
-    label="Share Screen"
-    icon="pi pi-desktop"
-    class="p-button-sm p-button-primary"
-    (click)="startScreenShare()"
-  ></button>
+  <div class="button-container">
+    <p-buttongroup>
+      <p-button
+        label="Share Screen"
+        icon="pi pi-desktop"
+        severity="primary"
+        (click)="startScreenShare()"
+      ></p-button>
 
- <button
-    pButton
-    [label]="micActive ? 'Mic On' : 'Mic Off'"
-    [icon]="'pi pi-microphone'"
-    [ngClass]="micActive ? 'p-button-sm p-button-success' : 'p-button-sm p-button-secondary'"
-    (click)="toggleMicrophone()"
-    type="button"
-  ></button>
-    <span *ngIf="micActive" class="mic-indicator" title="Microphone On"></span>
+      <div class="mic-button-wrapper">
+        <p-button
+          [label]="micActive ? 'Mic On' : 'Mic Off'"
+          icon="pi pi-microphone"
+          [severity]="micActive ? 'success' : 'secondary'"
+          (click)="toggleMicrophone()"
+        ></p-button>
+        <span *ngIf="micActive" class="mic-blink-dot"></span>
+      </div>
+    </p-buttongroup>
+  </div>
 
-
-</div>
-
-<!--<h4 class="section-title">Live Transcription</h4>-->
-
-<div class="transcript-box">
-  <ng-container *ngFor="let line of transcriptLines">
-    <p>{{ line }}</p>
-  </ng-container>
-  <p *ngIf="currentInterimLine" class="interim-line">{{ currentInterimLine }}</p>
+  <div class="transcript-box">
+    <p *ngFor="let line of transcriptLines">{{ line }}</p>
+    <p *ngIf="currentInterimLine">{{ currentInterimLine }}</p>
+    <p *ngIf="!transcriptLines.length && !currentInterimLine">
+      Waiting for session to start...
+    </p>
+  </div>
 </div>

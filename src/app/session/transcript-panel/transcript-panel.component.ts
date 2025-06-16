@@ -5,14 +5,17 @@ import {
   ElementRef,
   OnInit,
   ViewChild,
+  CUSTOM_ELEMENTS_SCHEMA
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { ButtonGroupModule } from 'primeng/buttongroup';
 import { SessionService } from '../../shared/services/session.service';
 
 @Component({
   selector: 'app-transcript-panel',
   standalone: true,
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule, ButtonGroupModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './transcript-panel.component.html',
   styleUrls: ['./transcript-panel.component.scss'],
 })
