@@ -1,1 +1,40 @@
-<p>home works!</p>
+<div class="session-page">
+  <h2>Session Setup</h2>
+
+  <div class="form-group">
+    <label for="position">Interview Position</label>
+    <input id="position" type="text" pInputText placeholder="e.g. Business Analyst" />
+  </div>
+
+ <div class="form-group">
+
+
+    <label for="llm">Select LLM</label>
+    <p-dropdown 
+  [options]="models" 
+  [(ngModel)]="selectedModel" 
+  placeholder="Select Model">
+</p-dropdown>
+
+  </div>
+
+  <div class="form-group">
+    <label for="prompt">Prompt</label>
+    <textarea id="prompt" rows="10" pInputTextarea placeholder="Choose a prompt..."></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="customPrompt">Custom Prompt</label>
+    <textarea id="customPrompt" rows="10" pInputTextarea placeholder="Enter custom prompt..."></textarea>
+  </div>
+
+  <button 
+  pButton 
+  type="button" 
+  label="Start Interview" 
+  icon="pi pi-play" 
+  class="start-btn" 
+  (click)="startSession()">
+</button>
+
+</div>
