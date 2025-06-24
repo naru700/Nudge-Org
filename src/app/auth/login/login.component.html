@@ -1,1 +1,38 @@
-<p>login works!</p>
+<div class="login-container">
+  <div class="login-card">
+    <h2 class="title">Sign in</h2>
+
+    <div class="p-fluid">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        pInputText
+        type="email"
+        [(ngModel)]="email"
+        placeholder="Enter your email"
+      />
+
+      <label for="password" class="mt-2">Password</label>
+      <p-password
+        inputId="password"
+        [(ngModel)]="password"
+        placeholder="Enter your password"
+        [feedback]="false"
+        toggleMask="true"
+      ></p-password>
+
+      <button 
+        pButton
+        label="Login"
+        icon="pi pi-sign-in"
+        class="p-button-primary mt-3"
+        (click)="login()"
+      ></button>
+    </div>
+
+    <p class="bottom-link">
+      Don't have an account?
+      <a routerLink="/register">Register here</a>
+    </p>
+  </div>
+</div>

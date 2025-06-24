@@ -1,0 +1,27 @@
+.session-page {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #2d2f7a;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .start-btn {
+    align-self: flex-start;
+    margin-top: 1.5rem;
+    background-color: #2d6df7;
+    border: none;
+  }
+}
