@@ -40,7 +40,6 @@ models = [
 ];
 
 startSession() {
-  //console.log(this.form);
   this.router.navigate(['/session']);
 }
 

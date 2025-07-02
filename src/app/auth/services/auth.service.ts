@@ -8,8 +8,6 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   register(name: string, email: string, password: string): Observable<any> {
-    console.log('Registering user:', { name, email, password });
-
    return this.http.post(`${environment.apiBaseUrl}/register`, { name, email, password });
   }
 

@@ -48,12 +48,10 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.invalid) {
-      console.log('form invalid');
       this.loginForm.markAllAsTouched();
       return;
     }
     const { email, password } = this.loginForm.value;
-    console.log('dispatching loginUser', email, password);
     this.store.dispatch(AuthActions.loginUser({ email, password }));
   }
 
