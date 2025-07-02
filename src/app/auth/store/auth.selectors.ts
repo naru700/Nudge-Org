@@ -17,3 +17,18 @@ export const selectAuthError = createSelector(
   selectAuthState,
   (state) => state.error
 );
+
+export const selectLoggingIn = createSelector(
+  selectAuthState,
+  (state) => state.loggingIn
+);
+
+export const selectLoggedIn = createSelector(
+  selectAuthState,
+  (state) => state.loggedIn
+);
+
+export const selectAuthToken = createSelector(
+  selectAuthState,
+  (state) => state.token
+);

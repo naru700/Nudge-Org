@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideAnimations(),
-    provideStore({ auth: authReducer }),
+    provideStore({ auth: authReducer }),  
     provideEffects([AuthEffects]),
   ]
 };

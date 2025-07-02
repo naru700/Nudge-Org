@@ -24,5 +24,39 @@ export class AuthEffects {
     )
   );
 
+    loginUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginUser),
+      mergeMap(action =>
+        this.authService.login(action.email, action.password).pipe(
+          map((res) => {
+          localStorage.setItem('access_token', res.access_token);
+          return AuthActions.loginUserSuccess({ token: res.access_token });
+        }),
+          catchError(err =>
+            of(
+              AuthActions.loginUserFailure({
+                error: err.error?.detail || err.error?.message || 'Login failed'
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  logoutUser$ = createEffect(
+  () =>
+    this.actions$.pipe(
+      ofType(AuthActions.logoutUser),
+      map(() => {
+        localStorage.removeItem('access_token');
+      })
+    ),
+  { dispatch: false }
+);
+
+  
+  
   constructor(private actions$: Actions, private authService: AuthService) {}
 }

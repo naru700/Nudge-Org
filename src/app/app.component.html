@@ -1,9 +1,15 @@
 <header class="app-header">
   <h2>Nudge</h2>
+  <button
+    *ngIf="loggedIn$ | async"
+    pButton
+    type="button"
+    label="Logout"
+    class="logout-btn"
+    (click)="logout()"
+  ></button>
 </header>
 
 <main class="app-main">
   <router-outlet></router-outlet>
 </main>
-
-<router-outlet></router-outlet>

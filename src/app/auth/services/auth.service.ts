@@ -9,8 +9,11 @@ export class AuthService {
 
   register(name: string, email: string, password: string): Observable<any> {
     console.log('Registering user:', { name, email, password });
-   // return this.http.post('/register', { name, email, password });
 
    return this.http.post(`${environment.apiBaseUrl}/register`, { name, email, password });
   }
+
+  login(email: string, password: string) {
+  return this.http.post<{ access_token: string }>(`${environment.apiBaseUrl}/login`, { email, password });
+}
 }

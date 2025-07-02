@@ -1,5 +1,18 @@
-.app-header h2 {
-  margin: 0;
-  padding-left: 1rem;
-}
+.app-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
 
+  h2 {
+    margin: 0;
+    padding-left: 1rem;
+  }
+
+  .logout-btn {
+    margin-left: auto;
+    background: #e53935;
+    color: #fff;
+    border: none;
+    font-weight: 500;
+  }
+}
