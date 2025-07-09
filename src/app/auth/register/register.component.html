@@ -1,5 +1,5 @@
-<div class="register-wrapper">
-<div class="register-card">
+<div class="auth-container">
+<div class="auth-card">
   <h2>Register</h2>
 
 <form [formGroup]="registerForm" (ngSubmit)="register()">
@@ -30,8 +30,23 @@
     </small>
   </div>
 
-  <button pButton type="submit" label="Register" icon="pi pi-user-plus" class="w-full mt-3"></button>
+  <button pButton type="submit" label="Register" [disabled]="registering$ | async">
+  <span *ngIf="registering$ | async" class="pi pi-spin pi-spinner"></span>
+</button>
 </form>
+
+<div *ngIf="error$ | async as error" class="error">
+  <ng-container *ngIf="error.includes('already registered'); else genericError">
+    Email already registered. Login using the link below.
+  </ng-container>
+  <ng-template #genericError>
+    {{ error }}
+  </ng-template>
+</div>
+
+<div *ngIf="registered$ | async" class="success">
+  Registration successful!
+</div>
 
 <p class="bottom-link">
   Already have an account?

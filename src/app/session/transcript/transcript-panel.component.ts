@@ -60,7 +60,6 @@ export class TranscriptPanelComponent implements OnInit {
 
         stream.getVideoTracks()[0].addEventListener('ended', () => {
           videoElement.srcObject = null;
-          console.log('Screen sharing stopped.');
         });
       })
       .catch((err) => {
@@ -86,7 +85,6 @@ export class TranscriptPanelComponent implements OnInit {
         .then((stream) => {
           this.micStream = stream;
           this.micActive = true;
-          console.log('Microphone active');
 
           if (SpeechRecognition) {
             this.recognition = new SpeechRecognition();
