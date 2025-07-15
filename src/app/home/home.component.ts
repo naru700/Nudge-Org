@@ -5,19 +5,25 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import * as HomeActions from './store/home.actions';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CardModule, ButtonModule, DropdownModule, InputTextModule, FormsModule],
+  imports: [CommonModule, CardModule, ButtonModule, DropdownModule, InputTextModule, FormsModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
 
-  constructor(private store: Store) {}
+  constructor(private router: Router) {}
+
+  selectedModel: string = '';
+
+  user = {
+    name: 'Test User',
+    email: 'TestUser@gmail.com'
+  }
 
   form = {
     position: '',
@@ -34,11 +40,6 @@ export class HomeComponent {
   ];
 
   startSession() {
-    this.store.dispatch(HomeActions.setHomeSessionInputs({
-      position: this.form.position,
-      llm: this.form.llm,
-      prompt: this.form.prompt,
-      customPrompt: this.form.customPrompt
-    }));
+    this.router.navigate(['/session']);
   }
 }
