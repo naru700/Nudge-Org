@@ -1,40 +1,42 @@
-<div class="session-page">
-  <h2>Session Setup</h2>
+<div class="home-container">
+  <div class="home-content">
+    <div class="setup-card">
+      <div class="card-header">
+        <h1 class="app-logo">Nudge</h1>
+        <h2 class="page-title">Interview Setup</h2>
+        <p class="page-subtitle">Configure your mock interview session</p>
+      </div>
 
-  <div class="form-group">
-    <label for="position">Interview Position</label>
-    <input id="position" type="text" pInputText placeholder="e.g. Business Analyst" />
+      <form class="setup-form">
+        <div class="form-group">
+          <label for="position">Interview Position</label>
+          <input id="position" type="text" pInputText placeholder="e.g. Business Analyst" [(ngModel)]="form.position"
+            name="position" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="llm">Select Language Model</label>
+          <p-dropdown id="llm" [options]="models" [(ngModel)]="selectedModel" placeholder="Select Model" name="llm"
+            styleClass="w-100" class="form-control"></p-dropdown>
+        </div>
+
+        <div class="form-group">
+          <label for="prompt">Interview Prompt</label>
+          <textarea id="prompt" rows="5" pInputTextarea placeholder="Choose a prompt..." [(ngModel)]="form.prompt"
+            name="prompt" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="customPrompt">Custom Prompt <span class="optional">(optional)</span></label>
+          <textarea id="customPrompt" rows="5" pInputTextarea placeholder="Enter custom prompt..."
+            [(ngModel)]="form.customPrompt" name="customPrompt" class="form-control"></textarea>
+        </div>
+
+        <div class="action-area">
+          <button pButton type="button" label="Start Interview" icon="pi pi-play" class="start-btn"
+            (click)="startSession()"></button>
+        </div>
+      </form>
+    </div>
   </div>
-
- <div class="form-group">
-
-
-    <label for="llm">Select LLM</label>
-    <p-dropdown 
-  [options]="models" 
-  [(ngModel)]="selectedModel" 
-  placeholder="Select Model">
-</p-dropdown>
-
-  </div>
-
-  <div class="form-group">
-    <label for="prompt">Prompt</label>
-    <textarea id="prompt" rows="10" pInputTextarea placeholder="Choose a prompt..."></textarea>
-  </div>
-
-  <div class="form-group">
-    <label for="customPrompt">Custom Prompt</label>
-    <textarea id="customPrompt" rows="10" pInputTextarea placeholder="Enter custom prompt..."></textarea>
-  </div>
-
-  <button 
-  pButton 
-  type="button" 
-  label="Start Interview" 
-  icon="pi pi-play" 
-  class="start-btn" 
-  (click)="startSession()">
-</button>
-
 </div>

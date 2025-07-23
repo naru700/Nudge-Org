@@ -1,22 +1,32 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputTextModule } from 'primeng/inputtext';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CardModule, ButtonModule, DropdownModule, InputTextModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    CardModule,
+    ButtonModule,
+    DropdownModule,
+    InputTextModule,
+    InputTextareaModule,
+    FormsModule,
+    RouterModule
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   selectedModel: string = '';
 

@@ -1,40 +1,45 @@
 <div class="auth-container">
   <div class="auth-card">
-  <h2>Login</h2>
-<form [formGroup]="loginForm" (ngSubmit)="login()">
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input id="email" type="email" pInputText formControlName="email" placeholder="Enter your email" />
-    <small *ngIf="f['email'].touched && f['email'].invalid" class="error">Enter a valid email</small>
+    <div class="card-header">
+      <h2>Login</h2>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="auth-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" pInputText formControlName="email" placeholder="Enter your email"
+          class="form-control" />
+        <small *ngIf="f['email'].touched && f['email'].invalid" class="error">Enter a valid email</small>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <p-password id="password" formControlName="password" placeholder="Enter password" toggleMask
+          styleClass="w-100" />
+        <small *ngIf="f['password'].touched && f['password'].invalid" class="error">Password is required</small>
+      </div>
+
+      <button pButton type="submit" label="Login" [disabled]="loggingIn$ | async" class="submit-btn">
+        <span *ngIf="loggingIn$ | async" class="pi pi-spin pi-spinner"></span>
+      </button>
+    </form>
+
+    <div *ngIf="loggedIn$ | async" class="success">
+      Login successful!
+    </div>
+
+    <div *ngIf="error$ | async as error" class="error">
+      <ng-container *ngIf="error.includes('Invalid credentials'); else genericError">
+        Invalid email or password.
+      </ng-container>
+      <ng-template #genericError>
+        {{ error }}
+      </ng-template>
+    </div>
+
+    <p class="bottom-link">
+      Don't have an account?
+      <a routerLink="/register">Register here</a>
+    </p>
+
   </div>
-
-  <div class="form-group">
-    <label for="password">Password</label>
-    <p-password id="password" formControlName="password" placeholder="Enter password" toggleMask />
-    <small *ngIf="f['password'].touched && f['password'].invalid" class="error">Password is required</small>
-  </div>
-
-<button pButton type="submit" label="Login" [disabled]="loggingIn$ | async">
-      <span *ngIf="loggingIn$ | async" class="pi pi-spin pi-spinner"></span>
-    </button>
-  </form>
-
-  <div *ngIf="loggedIn$ | async" class="success">
-  Login successful!
-</div>
-
-  <div *ngIf="error$ | async as error" class="error">
-    <ng-container *ngIf="error.includes('Invalid credentials'); else genericError">
-      Invalid email or password.
-    </ng-container>
-    <ng-template #genericError>
-      {{ error }}
-    </ng-template>
-  </div>
-
-  <p class="bottom-link">
-    Don't have an account?
-    <a routerLink="/register">Register here</a>
-  </p>
-
-</div>
