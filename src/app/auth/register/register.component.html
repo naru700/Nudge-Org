@@ -1,57 +1,63 @@
 <div class="auth-container">
-<div class="auth-card">
-  <h2>Register</h2>
+  <div class="auth-card">
+    <div class="card-header">
+      <h2>Register</h2>
+    </div>
 
-<form [formGroup]="registerForm" (ngSubmit)="register()">
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input id="name" type="text" pInputText formControlName="name" placeholder="Enter your name" />
-    <small *ngIf="f['name'].touched && f['name'].invalid" class="error">Name is required</small>
-  </div>
+    <form [formGroup]="registerForm" (ngSubmit)="register()" class="auth-form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" type="text" pInputText formControlName="name" placeholder="Enter your name"
+          class="form-control" />
+        <small *ngIf="f['name'].touched && f['name'].invalid" class="error">Name is required</small>
+      </div>
 
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input id="email" type="email" pInputText formControlName="email" placeholder="Enter your email" />
-    <small *ngIf="f['email'].touched && f['email'].errors?.['required']" class="error">Email is required</small>
-    <small *ngIf="f['email'].errors?.['email']" class="error">Enter a valid email</small>
-  </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" pInputText formControlName="email" placeholder="Enter your email"
+          class="form-control" />
+        <small *ngIf="f['email'].touched && f['email'].errors?.['required']" class="error">Email is required</small>
+        <small *ngIf="f['email'].errors?.['email']" class="error">Enter a valid email</small>
+      </div>
 
-  <div class="form-group">
-    <label for="password">Password</label>
-    <p-password id="password" formControlName="password" placeholder="Enter password" toggleMask />
-    <small *ngIf="f['password'].touched && f['password'].invalid" class="error">Min 6 characters</small>
-  </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <p-password id="password" formControlName="password" placeholder="Enter password" toggleMask
+          styleClass="w-100" />
+        <small *ngIf="f['password'].touched && f['password'].invalid" class="error">Min 6 characters</small>
+      </div>
 
-  <div class="form-group">
-    <label for="confirmPassword">Confirm Password</label>
-    <p-password id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm password" toggleMask />
-    <small *ngIf="registerForm.hasError('passwordsMismatch') && f['confirmPassword'].touched" class="error">
-      Passwords do not match
-    </small>
-  </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <p-password id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm password" toggleMask
+          styleClass="w-100" />
+        <small *ngIf="registerForm.hasError('passwordsMismatch') && f['confirmPassword'].touched" class="error">
+          Passwords do not match
+        </small>
+      </div>
 
-  <button pButton type="submit" label="Register" [disabled]="registering$ | async">
-  <span *ngIf="registering$ | async" class="pi pi-spin pi-spinner"></span>
-</button>
-</form>
+      <button pButton type="submit" label="Register" [disabled]="registering$ | async" class="submit-btn">
+        <span *ngIf="registering$ | async" class="pi pi-spin pi-spinner"></span>
+      </button>
+    </form>
 
-<div *ngIf="error$ | async as error" class="error">
-  <ng-container *ngIf="error.includes('already registered'); else genericError">
-    Email already registered. Login using the link below.
-  </ng-container>
-  <ng-template #genericError>
-    {{ error }}
-  </ng-template>
-</div>
+    <div *ngIf="error$ | async as error" class="error">
+      <ng-container *ngIf="error.includes('already registered'); else genericError">
+        Email already registered. Login using the link below.
+      </ng-container>
+      <ng-template #genericError>
+        {{ error }}
+      </ng-template>
+    </div>
 
-<div *ngIf="registered$ | async" class="success">
-  Registration successful!
-</div>
+    <div *ngIf="registered$ | async" class="success">
+      Registration successful!
+    </div>
 
-<p class="bottom-link">
-  Already have an account?
-  <a routerLink="/login">Login here</a>
-</p>
+    <p class="bottom-link">
+      Already have an account?
+      <a routerLink="/login">Login here</a>
+    </p>
 
   </div>
 </div>
