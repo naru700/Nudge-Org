@@ -7,7 +7,6 @@ import { provideEffects } from '@ngrx/effects';
 import { routes } from './app.routes';
 import { homeSessionInputsReducer } from './home/store/home.reducer';
 import { HomeEffects } from './home/store/home.effects';
-import { routes } from './app.routes';
 import { authReducer } from './auth/store/auth.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
 

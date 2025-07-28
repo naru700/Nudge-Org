@@ -7,7 +7,6 @@ import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as HomeActions from './store/home.actions';
 
@@ -29,7 +28,7 @@ import * as HomeActions from './store/home.actions';
 })
 export class HomeComponent {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private store: Store) { }
 
   selectedModel: string = '';
 
@@ -37,7 +36,6 @@ export class HomeComponent {
     name: 'Test User',
     email: 'TestUser@gmail.com'
   }
-  constructor(private store: Store) {}
 
   form = {
     position: '',
