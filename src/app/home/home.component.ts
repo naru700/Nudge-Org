@@ -7,6 +7,9 @@ import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FormsModule } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import * as HomeActions from './store/home.actions';
 
 @Component({
   selector: 'app-home',
@@ -34,23 +37,28 @@ export class HomeComponent {
     name: 'Test User',
     email: 'TestUser@gmail.com'
   }
+  constructor(private store: Store) {}
 
   form = {
-  position: '',
-  prompt: '',
-  customPrompt: '',
-  llm: ''
-};
+    position: '',
+    prompt: '',
+    customPrompt: '',
+    llm: ''
+  };
 
-models = [
-  { label: 'GPT-4', value: 'gpt-4' },
-  { label: 'GPT-3.5', value: 'gpt-3.5' },
-  { label: 'Claude 3', value: 'claude-3' },
-  { label: 'Gemini Pro', value: 'gemini-pro' }
-];
+  models = [
+    { label: 'GPT-4', value: 'gpt-4' },
+    { label: 'GPT-3.5', value: 'gpt-3.5' },
+    { label: 'Claude 3', value: 'claude-3' },
+    { label: 'Gemini Pro', value: 'gemini-pro' }
+  ];
 
-startSession() {
-  this.router.navigate(['/session']);
-}
-
+  startSession() {
+    this.store.dispatch(HomeActions.setHomeSessionInputs({
+      position: this.form.position,
+      llm: this.form.llm,
+      prompt: this.form.prompt,
+      customPrompt: this.form.customPrompt
+    }));
+  }
 }
