@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CardModule } from 'primeng/card';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as HomeActions from './store/home.actions';
@@ -11,12 +14,29 @@ import * as HomeActions from './store/home.actions';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CardModule, ButtonModule, DropdownModule, InputTextModule, FormsModule],
+  imports: [
+    CommonModule,
+    CardModule,
+    ButtonModule,
+    DropdownModule,
+    InputTextModule,
+    InputTextareaModule,
+    FormsModule,
+    RouterModule
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
 
+  constructor(private router: Router) { }
+
+  selectedModel: string = '';
+
+  user = {
+    name: 'Test User',
+    email: 'TestUser@gmail.com'
+  }
   constructor(private store: Store) {}
 
   form = {

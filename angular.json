@@ -29,12 +29,12 @@
               "src/favicon.ico",
               "src/assets"
             ],
-           "styles": [
-  "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
-  "node_modules/primeng/resources/primeng.min.css",
-  "node_modules/primeicons/primeicons.css",
-  "src/styles.scss"
-],
+            "styles": [
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -63,12 +63,22 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "hmr": true,
+            "liveReload": true,
+            "watch": true,
+            "poll": 2000
+          },
           "configurations": {
             "production": {
               "buildTarget": "nudge-app:build:production"
             },
             "development": {
-              "buildTarget": "nudge-app:build:development"
+              "buildTarget": "nudge-app:build:development",
+              "hmr": true,
+              "liveReload": true,
+              "watch": true,
+              "poll": 2000
             }
           },
           "defaultConfiguration": "development"
