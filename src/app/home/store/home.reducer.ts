@@ -6,6 +6,8 @@ export interface HomeSessionInputsState {
   llm: string;
   prompt: string;
   customPrompt: string;
+  sessionId?: string; // Optional sessionId to store after session start
+  error?: string; // Optional error message for failure cases
 }
 
 export const initialState: HomeSessionInputsState = {
@@ -17,11 +19,9 @@ export const initialState: HomeSessionInputsState = {
 
 export const homeSessionInputsReducer = createReducer(
   initialState,
-  on(HomeActions.setHomeSessionInputs, (state, { position, llm, prompt, customPrompt }) => ({
-    ...state,
-    position,
-    llm,
-    prompt,
-    customPrompt
-  }))
+ on(HomeActions.startSessionSuccess, (state, { sessionId }) => ({
+  ...state,
+  sessionId,
+  error: undefined
+})),
 );

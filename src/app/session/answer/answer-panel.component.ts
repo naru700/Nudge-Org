@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { SessionService } from '../../shared/services/session.service';
+import { Store, select } from '@ngrx/store';
+import { selectSessionId } from '../../home/store/home.selectors';
+import { HomeSessionInputsState } from '../../home/store/home.reducer';
 
 @Component({
   selector: 'app-answer-panel',
@@ -16,11 +19,16 @@ export class AnswerPanelComponent implements AfterViewInit {
   userQuestion = '';
   aiAnswer = '';
   loading = false;
+  sessionId = '';
 
   @ViewChild('questionInput') questionInput!: ElementRef;
   
 
-  constructor(private sessionService: SessionService) {
+  constructor(private sessionService: SessionService, private store: Store<{ home: HomeSessionInputsState }>) {
+    this.store.pipe(select(selectSessionId)).subscribe(id => {
+      this.sessionId = id ?? '';
+    });
+
     this.sessionService.question$.subscribe((q) => {
     this.userQuestion = q;
     this.submitQuestion();
@@ -37,11 +45,9 @@ export class AnswerPanelComponent implements AfterViewInit {
   if (!this.userQuestion.trim()) return;
   this.loading = true;
 
-  const sessionId = '0401e770-561a-4c60-9a19-918c19de92f0'; 
-
-  this.sessionService.generateAnswer(sessionId, this.userQuestion).subscribe({
-    next: (res) => {
-      this.aiAnswer = res.response;
+    this.sessionService.generateAnswer(this.sessionId, this.userQuestion).subscribe({
+      next: (res) => {
+        this.aiAnswer = res.response;
 
       this.sessionService.addToHistory({
         question: this.userQuestion,

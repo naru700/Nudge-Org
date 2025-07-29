@@ -22,3 +22,10 @@ export const selectHomeCustomPrompt = createSelector(
   selectHomeSessionInputsState,
   (state) => state.customPrompt
 );
+
+export const selectHomeState = (state: { home: HomeSessionInputsState }) => state.home;
+
+export const selectSessionId = createSelector(
+  selectHomeState,
+  (state) => state.sessionId
+);

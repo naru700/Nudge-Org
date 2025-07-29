@@ -1,21 +1,16 @@
 import { createAction, props } from '@ngrx/store';
 
-export const setHomeSessionInputs = createAction(
-  '[Home] Set Session Inputs',
-  props<{
-    position: string;
-    llm: string;
-    prompt: string;
-    customPrompt: string;
-  }>()
+export const startSession = createAction(
+  '[Home] Start Session',
+  props<{ position: string; llm: string; prompt: string; customPrompt: string }>()
 );
 
-export const sessionStartedSuccess = createAction(
+export const startSessionSuccess = createAction(
   '[Home] Session Started Success',
   props<{ sessionId: string }>()
 );
 
-export const sessionStartedFailure = createAction(
+export const startSessionFailure = createAction(
   '[Home] Session Started Failure',
   props<{ error: string }>()
 );

@@ -28,14 +28,9 @@ import * as HomeActions from './store/home.actions';
 })
 export class HomeComponent {
 
-  constructor(private router: Router, private store: Store) { }
+  constructor(private store: Store) { }
 
   selectedModel: string = '';
-
-  user = {
-    name: 'Test User',
-    email: 'TestUser@gmail.com'
-  }
 
   form = {
     position: '',
@@ -51,12 +46,12 @@ export class HomeComponent {
     { label: 'Gemini Pro', value: 'gemini-pro' }
   ];
 
-  startSession() {
-    this.store.dispatch(HomeActions.setHomeSessionInputs({
-      position: this.form.position,
-      llm: this.form.llm,
-      prompt: this.form.prompt,
-      customPrompt: this.form.customPrompt
-    }));
-  }
+startSession() {
+  this.store.dispatch(HomeActions.startSession({
+    position: this.form.position,
+    llm: this.form.llm,
+    prompt: this.form.prompt,
+    customPrompt: this.form.customPrompt
+  }));
+}
 }

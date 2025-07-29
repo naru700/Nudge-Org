@@ -14,7 +14,7 @@ export class SessionService {
   generateAnswer(sessionId: string, question: string): Observable<{
     response: string;
 }> {
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZWJlYWY4ZTAtMWQ2ZS00NGNkLThmMmMtYmY3ZWIxN2MwOThhIiwiZW1haWwiOiJ0ZXN0dXNlckBleGFtcGxlLmNvbSJ9.9dopf1S-faD3x92uE3vUi_zdDw7pWiJIFJirM6uwNJM'; 
+   const token = localStorage.getItem('access_token') ?? '';
   const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${token}`
