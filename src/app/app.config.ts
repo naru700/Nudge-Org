@@ -1,14 +1,14 @@
+import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http'; 
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideStore } from '@ngrx/store';
+import { provideRouter } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
+import { provideStore } from '@ngrx/store';
 import { routes } from './app.routes';
-import { homeSessionInputsReducer } from './home/store/home.reducer';
-import { HomeEffects } from './home/store/home.effects';
-import { authReducer } from './auth/store/auth.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
+import { authReducer } from './auth/store/auth.reducer';
+import { HomeEffects } from './home/store/home.effects';
+import { homeSessionInputsReducer } from './home/store/home.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideStore({ homeSessionInputs: homeSessionInputsReducer }),
     provideEffects([HomeEffects]),
-    provideStore({ auth: authReducer }),  
+    provideStore({ auth: authReducer }),
     provideEffects([AuthEffects])
   ]
 };
