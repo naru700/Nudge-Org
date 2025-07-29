@@ -67,7 +67,8 @@
             "hmr": true,
             "liveReload": true,
             "watch": true,
-            "poll": 2000
+            "poll": 2000,
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
