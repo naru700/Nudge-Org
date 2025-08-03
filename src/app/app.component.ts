@@ -7,6 +7,7 @@ import * as AuthActions from './auth/store/auth.actions';
 import * as AuthSelectors from './auth/store/auth.selectors';
 import { Router } from '@angular/router';
 import { AuthInitService } from './auth/services/auth-init.service';
+import { SessionInitService } from './home/services/session-init.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -22,9 +23,10 @@ export class AppComponent {
 
    loggedIn$ = this.store.pipe(select(AuthSelectors.selectLoggedIn));
 
-  constructor(private store: Store, private router: Router, authInit: AuthInitService)
+  constructor(private store: Store, private router: Router, authInit: AuthInitService, sessionInit: SessionInitService) 
   {
     authInit.initAuth();
+    sessionInit.initSession();
   }
 
   logout() {

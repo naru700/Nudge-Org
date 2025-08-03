@@ -11,10 +11,12 @@ export class SessionService {
 
   constructor(private http: HttpClient) {}
 
-  generateAnswer(sessionId: string, question: string): Observable<{
+  generateAnswer(sessionId: string, question: string, token:string): Observable<{
     response: string;
 }> {
-   const token = localStorage.getItem('access_token') ?? '';
+  if (!sessionId || !question) {
+    throw new Error('Session ID and question are required');
+  }
   const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${token}`
