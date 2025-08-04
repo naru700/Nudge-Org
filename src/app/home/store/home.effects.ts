@@ -22,7 +22,7 @@ export class HomeEffects {
       ofType(HomeActions.startSession),
       withLatestFrom(this.store.pipe(select(selectAuthToken))),
       switchMap(([action, token]) =>
-        this.http.post<{ sessionId: string }>(`${environment.apiBaseUrl}/start-session`, {
+        this.http.post<{ session_id: string }>(`${environment.apiBaseUrl}/start-session`, {
           position: action.position,
           llm: action.llm,
           prompt: action.prompt,
@@ -33,7 +33,10 @@ export class HomeEffects {
             'Content-Type': 'application/json'
           }
         }).pipe(
-          map(res => HomeActions.startSessionSuccess({ sessionId: res.sessionId })),
+            map(res => {
+             localStorage.setItem('session_id', res.session_id);
+             return HomeActions.startSessionSuccess({ sessionId: res.session_id });
+            }),
           catchError(err =>
             of(HomeActions.startSessionFailure({ error: err.error?.detail || 'Session start failed' }))
           )
@@ -46,9 +49,6 @@ export class HomeEffects {
     this.actions$.pipe(
       ofType(HomeActions.startSessionSuccess),
       map(action => {
-        // If you use route params:
-        // this.router.navigate(['/session', action.sessionId]);
-        // If you use state only:
         this.router.navigate(['/session']);
       })
     ),
