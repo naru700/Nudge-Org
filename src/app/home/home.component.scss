@@ -2,34 +2,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background: #f3f6f9;
-  padding: 1rem;
+  min-height: calc(100vh - 64px);
+  background: linear-gradient(120deg, #f5f7fa 0%, #e4e8f0 100%);
+  padding: 2rem;
 
   // Mobile responsive padding
   @media (max-width: 768px) {
-    padding: 0.5rem;
-    align-items: flex-start;
-    padding-top: 2rem;
+    padding: 1.5rem;
+    min-height: calc(100vh - 64px);
   }
 
   @media (max-width: 480px) {
-    padding: 0.25rem;
-    padding-top: 1rem;
+    padding: 1rem;
   }
 }
 
 .home-content {
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
 }
 
 .setup-card {
   background: #ffffff;
   padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.03);
 
   // Responsive padding for different screen sizes
   @media (max-width: 768px) {
@@ -38,18 +37,17 @@
 
   @media (max-width: 480px) {
     padding: 1.5rem;
-    border-radius: 8px;
   }
 }
 
 .card-header {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   text-align: center;
 
   .app-logo {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    color: #0a66c2;
+    color: #2c3e50;
     margin-bottom: 1rem;
   }
 
@@ -114,8 +112,8 @@
       border-radius: 8px;
       font-size: 16px;
       font-weight: 600;
-      background-color: #0a66c2;
-      border: 2px solid #0a66c2;
+      background-color: #3498db;
+      border: 2px solid #3498db;
       color: white;
       transition: all 0.15s ease-in-out;
 
@@ -132,10 +130,10 @@
       }
 
       &:hover {
-        background-color: #004182;
-        border-color: #004182;
+        background-color: #2980b9;
+        border-color: #2980b9;
         transform: translateY(-1px);
-        box-shadow: 0 2px 8px rgba(10, 102, 194, 0.25);
+        box-shadow: 0 2px 8px rgba(52, 152, 219, 0.25);
       }
 
       &:active {
@@ -148,81 +146,96 @@
 :host ::ng-deep {
   .p-dropdown {
     width: 100%;
-
+    
     .p-dropdown-label {
-      padding: 12px 16px;
-      font-size: 16px;
-      color: #111827;
-
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      color: #333;
+      
       @media (max-width: 480px) {
-        padding: 10px 12px;
-      }
-
-      @media (max-width: 360px) {
-        padding: 8px 10px;
+        padding: 0.6rem 0.8rem;
       }
     }
-
+    
     &.p-dropdown-clearable .p-dropdown-label {
       padding-right: 2.5rem;
     }
   }
-
-  .p-inputtext,
-  .p-dropdown,
+  
   .p-inputtext,
   .p-dropdown {
     height: 48px;
-    border-radius: 8px;
-    border: 2px solid #d1d5db;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    background-color: #fff;
     font-size: 16px;
-    color: #111827;
-    background-color: white;
-    transition: all 0.15s ease-in-out;
-
+    color: #333;
+    
     @media (max-width: 480px) {
       height: 44px;
     }
-
+    
     @media (max-width: 360px) {
       height: 40px;
     }
-  }
-
-  .p-inputtextarea {
-    border-radius: 8px;
-    border: 2px solid #d1d5db;
-    font-size: 16px;
-    color: #111827;
-    padding: 12px 16px;
-    min-height: 120px;
-    background-color: white;
-    transition: all 0.15s ease-in-out;
-
-    @media (max-width: 480px) {
-      height: 44px;
-      padding: 10px 12px;
-      font-size: 16px;
-    }
-
-    @media (max-width: 360px) {
-      height: 40px;
-      padding: 8px 10px;
-    }
-
-    &::placeholder {
-      color: #9ca3af;
-    }
-
+    
     &:hover {
-      border-color: #9ca3af;
+      border-color: #bdc3c7;
     }
-
+    
     &:focus,
     &:enabled:focus {
       outline: none;
-      border-color: #0a66c2;
-      box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+  }
+  
+  .p-inputtextarea {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    resize: vertical;
+    min-height: 100px;
+    transition: all 0.2s ease;
+    background-color: #fff;
+    color: #333;
+    
+    @media (max-width: 480px) {
+      padding: 0.6rem 0.8rem;
+    }
+    
+    &::placeholder {
+      color: #9ca3af;
+    }
+    
+    &:hover {
+      border-color: #bdc3c7;
+    }
+    
+    &:focus,
+    &:enabled:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+  }
+  
+  .p-button {
+    &.start-btn {
+      background: #3498db;
+      border-color: #3498db;
+      
+      &:hover {
+        background: #2980b9;
+        border-color: #2980b9;
+      }
+      
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+      }
     }
   }
 }
