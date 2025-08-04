@@ -1,13 +1,18 @@
 <header class="app-header">
-  <h2>Nudge</h2>
-  <button
-    *ngIf="loggedIn$ | async"
-    pButton
-    type="button"
-    label="Logout"
-    class="logout-btn"
-    (click)="logout()"
-  ></button>
+  <div class="nav-container">
+    <h2>
+      <span class="logo-icon">N</span>
+      Nudge
+    </h2>
+    <button
+      *ngIf="loggedIn$ | async"
+      pButton
+      type="button"
+      label="Logout"
+      class="logout-btn"
+      (click)="logout()"
+    ></button>
+  </div>
 </header>
 
 <main class="app-main">
