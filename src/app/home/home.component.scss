@@ -1,101 +1,141 @@
 .home-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  min-height: 100vh;
-  background: #f3f6f9;
-  padding: 1rem;
+  min-height: calc(100vh - 52px);
+  padding: 1.5rem;
+  position: relative;
+  width: 100%;
+  max-width: 1128px;
+  margin: 0 auto;
 
   // Mobile responsive padding
+  @media (max-width: 1200px) {
+    max-width: 100%;
+    padding: 1.25rem;
+  }
+
   @media (max-width: 768px) {
-    padding: 0.5rem;
+    padding: 1rem;
     align-items: flex-start;
-    padding-top: 2rem;
+    min-height: calc(100vh - 48px);
   }
 
   @media (max-width: 480px) {
-    padding: 0.25rem;
-    padding-top: 1rem;
+    padding: 0.75rem;
+    min-height: calc(100vh - 44px);
+  }
+
+  @media (max-width: 576px) {
+    min-height: calc(100vh - 42px);
+  }
+
+  @media (max-width: 360px) {
+    padding: 0.5rem;
   }
 }
 
 .home-content {
   width: 100%;
-  max-width: 600px;
+  max-width: 570px;
+  position: relative;
+  z-index: 2;
+  margin: 24px auto 0;
 }
 
 .setup-card {
   background: #ffffff;
-  padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
   width: 100%;
+  border: none;
 
   // Responsive padding for different screen sizes
   @media (max-width: 768px) {
-    padding: 2rem;
+    padding: 20px;
   }
 
   @media (max-width: 480px) {
-    padding: 1.5rem;
-    border-radius: 8px;
+    padding: 16px;
+  }
+
+  @media (max-width: 360px) {
+    padding: 12px;
   }
 }
 
 .card-header {
-  margin-bottom: 2rem;
+  margin-bottom: 24px;
   text-align: center;
 
   .app-logo {
     font-size: 2rem;
     font-weight: 700;
     color: #0a66c2;
-    margin-bottom: 1rem;
+    margin-bottom: 12px;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+
+    @media (max-width: 480px) {
+      font-size: 1.75rem;
+    }
   }
 
   .page-title {
-    font-size: 1.75rem;
+    font-size: 1.875rem;
     font-weight: 600;
-    color: #1a1a1a;
-    margin-bottom: 0.5rem;
+    color: #1f2937;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.025em;
+
+    @media (max-width: 480px) {
+      font-size: 1.625rem;
+      margin-bottom: 0.5rem;
+    }
   }
 
   .page-subtitle {
-    font-size: 1rem;
-    color: #666;
+    font-size: 1.125rem;
+    color: #6b7280;
     margin-bottom: 0;
+    font-weight: 400;
+
+    @media (max-width: 480px) {
+      font-size: 1rem;
+    }
   }
 }
 
 .setup-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 16px;
 
   @media (max-width: 480px) {
-    gap: 1rem;
+    gap: 12px;
   }
 
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 4px;
 
     label {
-      font-size: 0.875rem;
+      font-size: 14px;
       font-weight: 600;
-      color: #374151;
-      margin-bottom: 0.25rem;
+      color: rgba(0, 0, 0, 0.75);
+      margin-bottom: 4px;
+      font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 
       @media (max-width: 480px) {
-        font-size: 0.8rem;
+        font-size: 13px;
       }
     }
 
     .optional {
-      font-size: 0.875rem;
-      color: #666;
-      font-weight: normal;
+      font-size: 13px;
+      color: rgba(0, 0, 0, 0.5);
+      font-weight: 400;
     }
 
     .form-control {
@@ -106,40 +146,49 @@
   .action-area {
     display: flex;
     justify-content: center;
-    margin-top: 1.5rem;
+    margin-top: 16px;
 
     .start-btn {
       height: 48px;
-      padding: 12px 24px;
-      border-radius: 8px;
+      padding: 0 24px;
+      border-radius: 24px;
       font-size: 16px;
       font-weight: 600;
       background-color: #0a66c2;
-      border: 2px solid #0a66c2;
+      border: none;
       color: white;
-      transition: all 0.15s ease-in-out;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 
       @media (max-width: 480px) {
         height: 44px;
-        padding: 10px 20px;
+        padding: 0 20px;
         font-size: 15px;
+        width: 100%;
       }
 
       @media (max-width: 360px) {
         height: 40px;
-        padding: 8px 16px;
+        padding: 0 16px;
         font-size: 14px;
       }
 
       &:hover {
         background-color: #004182;
-        border-color: #004182;
-        transform: translateY(-1px);
-        box-shadow: 0 2px 8px rgba(10, 102, 194, 0.25);
       }
 
       &:active {
-        transform: translateY(0);
+        background-color: #00295c;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.5);
+      }
+
+      i {
+        margin-right: 8px;
       }
     }
   }
@@ -148,81 +197,136 @@
 :host ::ng-deep {
   .p-dropdown {
     width: 100%;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
 
     .p-dropdown-label {
       padding: 12px 16px;
-      font-size: 16px;
-      color: #111827;
-
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.9);
+      font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    
       @media (max-width: 480px) {
-        padding: 10px 12px;
+        padding: 10px 14px;
+        font-size: 13px;
       }
 
       @media (max-width: 360px) {
-        padding: 8px 10px;
+        padding: 8px 12px;
+        font-size: 12px;
       }
     }
 
     &.p-dropdown-clearable .p-dropdown-label {
-      padding-right: 2.5rem;
+      padding-right: 2rem;
     }
   }
 
-  .p-inputtext,
-  .p-dropdown,
   .p-inputtext,
   .p-dropdown {
-    height: 48px;
-    border-radius: 8px;
-    border: 2px solid #d1d5db;
-    font-size: 16px;
-    color: #111827;
-    background-color: white;
-    transition: all 0.15s ease-in-out;
+    height: 42px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.9);
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 
     @media (max-width: 480px) {
-      height: 44px;
+      height: 38px;
+      font-size: 13px;
     }
 
     @media (max-width: 360px) {
-      height: 40px;
-    }
-  }
-
-  .p-inputtextarea {
-    border-radius: 8px;
-    border: 2px solid #d1d5db;
-    font-size: 16px;
-    color: #111827;
-    padding: 12px 16px;
-    min-height: 120px;
-    background-color: white;
-    transition: all 0.15s ease-in-out;
-
-    @media (max-width: 480px) {
-      height: 44px;
-      padding: 10px 12px;
-      font-size: 16px;
-    }
-
-    @media (max-width: 360px) {
-      height: 40px;
-      padding: 8px 10px;
-    }
-
-    &::placeholder {
-      color: #9ca3af;
+      height: 36px;
+      font-size: 12px;
     }
 
     &:hover {
-      border-color: #9ca3af;
+      border-color: rgba(0, 0, 0, 0.3);
     }
 
     &:focus,
     &:enabled:focus {
       outline: none;
       border-color: #0a66c2;
-      box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+      box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.25);
     }
+  }
+
+  .p-inputtextarea {
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.9);
+    padding: 12px 16px;
+    min-height: 100px;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    resize: vertical;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+
+    @media (max-width: 480px) {
+      padding: 10px 14px;
+      font-size: 13px;
+      min-height: 90px;
+    }
+
+    @media (max-width: 360px) {
+      padding: 8px 12px;
+      font-size: 12px;
+      min-height: 80px;
+    }
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.45);
+    }
+
+    &:hover {
+      border-color: rgba(0, 0, 0, 0.3);
+    }
+
+    &:focus,
+    &:enabled:focus {
+      outline: none;
+      border-color: #0a66c2;
+      box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.25);
+    }
+  }
+
+  .p-button {
+    &.start-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background-color: #004182;
+      }
+      
+      &:active {
+        background-color: #00295c;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.5);
+      }
+    }
+  }
+}
+
+// Smooth animations
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

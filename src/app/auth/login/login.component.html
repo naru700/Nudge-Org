@@ -1,7 +1,8 @@
 <div class="auth-container">
   <div class="auth-card">
     <div class="card-header">
-      <h2>Login</h2>
+      <h2>Welcome Back</h2>
+      <p class="welcome-subtitle">Sign in to continue your interview preparation</p>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="auth-form">
@@ -19,7 +20,7 @@
         <small *ngIf="f['password'].touched && f['password'].invalid" class="error">Password is required</small>
       </div>
 
-      <button pButton type="submit" label="Login" [disabled]="loggingIn$ | async" class="submit-btn">
+      <button pButton type="submit" label="Sign In" [disabled]="loggingIn$ | async" class="submit-btn">
         <span *ngIf="loggingIn$ | async" class="pi pi-spin pi-spinner"></span>
       </button>
     </form>

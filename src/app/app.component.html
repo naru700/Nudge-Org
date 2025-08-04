@@ -1,11 +1,13 @@
-<header class="app-header">
-  <div class="logo-container">
-    <div class="logo-icon">N</div>
-    <h2>Nudge</h2>
-  </div>
-  <div class="header-actions">
-    <button *ngIf="loggedIn$ | async" pButton type="button" label="Logout" icon="pi pi-sign-out" iconPos="left"
-      class="logout-btn" (click)="logout()"></button>
+<header class="app-header fade-in">
+  <div class="nav-container">
+    <div class="logo-container" routerLink="/">
+      <div class="logo-icon">N</div>
+      <h2>Nudge</h2>
+    </div>
+    <div class="header-actions">
+      <button *ngIf="loggedIn$ | async" pButton type="button" label="Logout" icon="pi pi-sign-out" iconPos="left"
+        class="logout-btn" (click)="logout()"></button>
+    </div>
   </div>
 </header>
 

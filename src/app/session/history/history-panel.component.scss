@@ -1,29 +1,88 @@
+h3 {
+  margin: 0 0 1.5rem 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #0a66c2 0%, #1e7ed8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 1.125rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
 .history {
   list-style: none;
   padding: 0;
   margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  //max-height: calc(100vh - 200px); // adjust if needed
+  font-size: 0.95rem;
+  line-height: 1.6;
   overflow-y: auto;
   scrollbar-width: thin;
+  scrollbar-color: rgba(10, 102, 194, 0.3) transparent;
 
-li {
-  font-size: 0.9rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-    background-color: #f7f9fc;
-    border-radius: 6px;
-    padding: 0.75rem;
-    margin-bottom: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(10, 102, 194, 0.3);
+    border-radius: 3px;
+  }
+
+  li {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    background: rgba(248, 250, 252, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
 
     strong {
       display: block;
       font-weight: 600;
-      color: #333;
+      color: #374151;
+      margin-bottom: 0.25rem;
+    }
+
+    span {
+      color: #6b7280;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 480px) {
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
     }
   }
 }

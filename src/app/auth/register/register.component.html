@@ -1,7 +1,8 @@
 <div class="auth-container">
-  <div class="auth-card">
+  <div class="auth-card fade-in">
     <div class="card-header">
-      <h2>Register</h2>
+      <h2>Create Account</h2>
+      <p class="welcome-subtitle">Join us to start your interview preparation journey</p>
     </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="register()" class="auth-form">
@@ -36,7 +37,7 @@
         </small>
       </div>
 
-      <button pButton type="submit" label="Register" [disabled]="registering$ | async" class="submit-btn">
+      <button pButton type="submit" label="Create Account" [disabled]="registering$ | async" class="submit-btn">
         <span *ngIf="registering$ | async" class="pi pi-spin pi-spinner"></span>
       </button>
     </form>
