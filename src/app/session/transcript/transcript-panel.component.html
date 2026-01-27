@@ -3,30 +3,58 @@
 
   <div class="button-container">
     <p-buttongroup>
-      <p-button
-        label="Share Screen"
-        icon="pi pi-desktop"
-        severity="primary"
-        (click)="startScreenShare()"
-      ></p-button>
-
       <div class="mic-button-wrapper">
         <p-button
-          [label]="micActive ? 'Mic On' : 'Mic Off'"
+          [label]="micActive ? 'Stop Mic' : 'Start Mic'"
           icon="pi pi-microphone"
           [severity]="micActive ? 'success' : 'secondary'"
           (click)="toggleMicrophone()"
         ></p-button>
         <span *ngIf="micActive" class="mic-blink-dot"></span>
       </div>
+
+      <div class="mic-button-wrapper">
+        <p-button
+          [label]="screenShareActive ? 'Stop Share' : 'Share Screen + Audio'"
+          icon="pi pi-desktop"
+          [severity]="screenShareActive ? 'danger' : 'primary'"
+          (click)="toggleScreenShareWithAudio()"
+        ></p-button>
+        <span *ngIf="screenShareActive" class="mic-blink-dot"></span>
+      </div>
     </p-buttongroup>
   </div>
 
-  <div class="transcript-box">
-    <p *ngFor="let line of transcriptLines">{{ line }}</p>
-    <p *ngIf="currentInterimLine">{{ currentInterimLine }}</p>
-    <p *ngIf="!transcriptLines.length && !currentInterimLine">
-      Waiting for session to start...
+  <div class="connection-status" *ngIf="!wsConnected && (micActive || screenShareActive)">
+    <small class="status-text connecting">
+      <i class="pi pi-circle-fill"></i>
+      Connecting to transcription service...
+    </small>
+  </div>
+
+  <div class="connection-status" *ngIf="wsConnected && (micActive || screenShareActive)">
+    <small class="status-text connected">
+      <i class="pi pi-circle-fill"></i>
+      Transcription Active
+    </small>
+  </div>
+
+  <div class="connection-status error" *ngIf="wsConnectionError">
+    <small class="status-text error-text">
+      <i class="pi pi-exclamation-circle"></i>
+      {{ wsConnectionError }}
+    </small>
+  </div>
+
+  <div #transcriptBox class="transcript-box">
+    <p *ngFor="let line of transcriptLines; let i = index" 
+       [class.latest-transcript]="i === transcriptLines.length - 1 && currentTranscript">{{ line }}</p>
+    <p *ngIf="!transcriptLines.length">
+      Click "Start Mic" to transcribe your voice or "Share Screen + Audio" to transcribe interview audio...
     </p>
+  </div>
+  
+  <div class="hint-text" *ngIf="currentTranscript">
+    <small><i class="pi pi-info-circle"></i> Press Enter to send highlighted text OR select any text and press Enter</small>
   </div>
 </div>

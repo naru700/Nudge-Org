@@ -27,6 +27,11 @@
     <p class="loading">🕐 Generating answer...</p>
   </ng-container>
   <ng-template #answerBlock>
-    <p *ngIf="aiAnswer">{{ aiAnswer }}</p>
+    <div *ngIf="lastQuestion" class="question-display">
+      <strong>Q:</strong> {{ lastQuestion }}
+    </div>
+    <div *ngIf="aiAnswer" class="answer-display">
+      <strong>A:</strong> {{ aiAnswer }}
+    </div>
   </ng-template>
 </div>

@@ -18,6 +18,31 @@
     color: #999;
     font-style: italic;
   }
+  
+  .question-display {
+    background: #e3f2fd;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #2196f3;
+    
+    strong {
+      color: #1976d2;
+      margin-right: 0.5rem;
+    }
+  }
+  
+  .answer-display {
+    background: #f1f8e9;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border-left: 4px solid #8bc34a;
+    
+    strong {
+      color: #689f38;
+      margin-right: 0.5rem;
+    }
+  }
 }
 
 

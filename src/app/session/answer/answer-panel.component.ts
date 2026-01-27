@@ -20,6 +20,7 @@ import { take } from 'rxjs/operators';
 })
 export class AnswerPanelComponent implements AfterViewInit, OnInit {
   userQuestion = '';
+  lastQuestion = ''; // Track the question that was sent
   aiAnswer = '';
   loading = false;
 
@@ -48,13 +49,18 @@ export class AnswerPanelComponent implements AfterViewInit, OnInit {
       this.store.pipe(select(selectAuthToken), take(1))
     ]).subscribe(
       ([sessionId, token]) => {
+        console.log('Session ID:', sessionId);
+        console.log('Token:', token ? 'Token exists' : 'Token missing');
+        
         if (!sessionId || !token) {
-          this.aiAnswer = '⚠️ Session ID or token is missing.';
+          this.aiAnswer = '⚠️ Session ID or token is missing. Please login again.';
           this.loading = false;
+          console.error('Missing credentials - SessionID:', !!sessionId, 'Token:', !!token);
           return;
         }
         this.sessionService.generateAnswer(sessionId, this.userQuestion, token).subscribe({
           next: (res) => {
+            this.lastQuestion = this.userQuestion; // Store the question
             this.aiAnswer = res.response;
             this.sessionService.addToHistory({
               question: this.userQuestion,
@@ -66,7 +72,13 @@ export class AnswerPanelComponent implements AfterViewInit, OnInit {
           },
           error: (err) => {
             console.error('API error:', err);
-            this.aiAnswer = '⚠️ Failed to generate response.';
+            console.error('Error status:', err.status);
+            console.error('Error message:', err.message);
+            if (err.status === 401) {
+              this.aiAnswer = '⚠️ Unauthorized. Please login again.';
+            } else {
+              this.aiAnswer = '⚠️ Failed to generate response.';
+            }
             this.loading = false;
           }
         });
