@@ -1,6 +1,6 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http'; 
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -9,13 +9,14 @@ import { homeReducer } from './home/store/home.reducer';
 import { HomeEffects } from './home/store/home.effects';
 import { authReducer } from './auth/store/auth.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
+import { authInterceptor } from './shared/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimations(),
-    provideStore({ home: homeReducer, auth: authReducer }), // <-- both here!
-    provideEffects([HomeEffects, AuthEffects]) // <-- both here!
+    provideStore({ home: homeReducer, auth: authReducer }),
+    provideEffects([HomeEffects, AuthEffects])
   ]
 };

@@ -7,6 +7,7 @@ export interface AuthState {
   loggingIn: boolean;
   loggedIn: boolean;
   token: string | null;
+  credits: number | null;
   error: string | null;
 }
 
@@ -16,6 +17,7 @@ export const initialState: AuthState = {
   loggingIn: false,
   loggedIn: false,
   token: null,
+  credits: null,
   error: null
 };
 
@@ -59,10 +61,16 @@ export const authReducer = createReducer(
     error
   })),
   on(AuthActions.logoutUser, state => ({
-  ...state,
-  loggedIn: false,
-  token: null,
-  error: null
-})),
+    ...state,
+    loggedIn: false,
+    token: null,
+    credits: null,
+    error: null
+  })),
+  on(AuthActions.setCredits, (state, { credits }) => ({ ...state, credits })),
+  on(AuthActions.decrementCredits, state => ({
+    ...state,
+    credits: state.credits !== null ? Math.max(0, state.credits - 1) : null
+  })),
 );
 

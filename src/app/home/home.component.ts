@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as HomeActions from './store/home.actions';
+import { selectSessionStarting, selectHomeError } from './store/home.selectors';
 
 @Component({
   selector: 'app-home',
@@ -27,10 +28,10 @@ import * as HomeActions from './store/home.actions';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  starting$ = this.store.pipe(select(selectSessionStarting));
+  error$ = this.store.pipe(select(selectHomeError));
 
-  constructor(private store: Store) { }
-
-  selectedModel: string = '';
+  selectedModel: string = 'gpt-4o';
 
   form = {
     position: '',
@@ -40,18 +41,27 @@ export class HomeComponent {
   };
 
   models = [
-    { label: 'GPT-4', value: 'gpt-4' },
-    { label: 'GPT-3.5', value: 'gpt-3.5' },
-    { label: 'Claude 3', value: 'claude-3' },
-    { label: 'Gemini Pro', value: 'gemini-pro' }
+    { label: 'GPT-4o', value: 'gpt-4o' },
+    { label: 'GPT-4o mini', value: 'gpt-4o-mini' },
+    { label: 'GPT-4 Turbo', value: 'gpt-4-turbo' },
+    { label: 'o4-mini', value: 'o4-mini' },
   ];
 
-startSession() {
-  this.store.dispatch(HomeActions.startSession({
-    position: this.form.position,
-    llm: this.form.llm,
-    prompt: this.form.prompt,
-    customPrompt: this.form.customPrompt
-  }));
-}
+  constructor(private store: Store) {}
+
+  startSession() {
+    const position = this.form.position.trim();
+    const prompt = this.form.prompt.trim();
+
+    if (!position || !prompt || !this.selectedModel) {
+      return;
+    }
+
+    this.store.dispatch(HomeActions.startSession({
+      position,
+      llm: this.selectedModel,
+      prompt,
+      customPrompt: this.form.customPrompt
+    }));
+  }
 }

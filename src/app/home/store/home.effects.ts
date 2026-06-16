@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store, select } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { switchMap, withLatestFrom, map, catchError, of } from 'rxjs';
+import { switchMap, map, catchError, of } from 'rxjs';
 import * as HomeActions from './home.actions';
-import { selectAuthToken } from '../../auth/store/auth.selectors';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
@@ -12,7 +10,6 @@ import { environment } from '../../../environments/environment';
 export class HomeEffects {
   constructor(
     private actions$: Actions,
-    private store: Store,
     private http: HttpClient,
     private router: Router
   ) {}
@@ -20,23 +17,17 @@ export class HomeEffects {
   startSession$ = createEffect(() =>
     this.actions$.pipe(
       ofType(HomeActions.startSession),
-      withLatestFrom(this.store.pipe(select(selectAuthToken))),
-      switchMap(([action, token]) =>
+      switchMap(action =>
         this.http.post<{ session_id: string }>(`${environment.apiBaseUrl}/start-session`, {
           position: action.position,
           llm: action.llm,
           prompt: action.prompt,
-          customPrompt: action.customPrompt
-        }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+          customPrompt: action.customPrompt.trim() || null
         }).pipe(
-            map(res => {
-             localStorage.setItem('session_id', res.session_id);
-             return HomeActions.startSessionSuccess({ sessionId: res.session_id });
-            }),
+          map(res => {
+            localStorage.setItem('session_id', res.session_id);
+            return HomeActions.startSessionSuccess({ sessionId: res.session_id });
+          }),
           catchError(err =>
             of(HomeActions.startSessionFailure({ error: err.error?.detail || 'Session start failed' }))
           )
@@ -44,14 +35,13 @@ export class HomeEffects {
       )
     )
   );
+
   navigateToSession$ = createEffect(
-  () =>
-    this.actions$.pipe(
-      ofType(HomeActions.startSessionSuccess),
-      map(action => {
-        this.router.navigate(['/session']);
-      })
-    ),
-  { dispatch: false }
-);
+    () =>
+      this.actions$.pipe(
+        ofType(HomeActions.startSessionSuccess),
+        map(() => this.router.navigate(['/session']))
+      ),
+    { dispatch: false }
+  );
 }

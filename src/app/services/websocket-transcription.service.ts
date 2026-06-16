@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface TranscriptionMessage {
-  type: 'transcription' | 'error';
+  type: 'transcription' | 'error' | 'ack';
   text?: string;
   message?: string;
   timestamp: string;
@@ -14,51 +15,71 @@ export interface TranscriptionMessage {
 })
 export class WebsocketTranscriptionService {
   private ws: WebSocket | null = null;
-  private readonly wsUrl = 'ws://localhost:8000/speech/ws';
-  private sessionId = this.generateSessionId();
-  
+  private readonly wsUrl = `${environment.wsBaseUrl}/speech/ws`;
+  private sessionId: string | null = null;
+
   private connectionStatus = new BehaviorSubject<boolean>(false);
   private transcriptionSubject = new Subject<TranscriptionMessage>();
-  
+
   public connectionStatus$ = this.connectionStatus.asObservable();
   public transcription$ = this.transcriptionSubject.asObservable();
 
-  connect(): Promise<void> {
+  constructor(private ngZone: NgZone) {}
+
+  connect(sessionId: string): Promise<void> {
+    this.sessionId = sessionId;
+
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      return Promise.reject(new Error('No auth token — please log in'));
+    }
+
+    const url = `${this.wsUrl}?token=${encodeURIComponent(token)}`;
+
     return new Promise((resolve, reject) => {
       try {
-        this.ws = new WebSocket(this.wsUrl);
-        
+        this.ws = new WebSocket(url);
+
         this.ws.onopen = () => {
-          this.connectionStatus.next(true);
-          console.log('WebSocket connected');
-          resolve();
+          this.ngZone.run(() => {
+            this.connectionStatus.next(true);
+            resolve();
+          });
         };
-        
+
         this.ws.onmessage = (event) => {
-          console.log('WebSocket message received:', event.data);
-          try {
-            // Try parsing as JSON first
-            const data: TranscriptionMessage = JSON.parse(event.data);
-            this.transcriptionSubject.next(data);
-          } catch (error) {
-            // If not JSON, treat as plain text transcription (like reference HTML)
-            console.log('Received plain text transcription:', event.data);
-            this.transcriptionSubject.next({
-              type: 'transcription',
-              text: event.data,
-              timestamp: new Date().toISOString()
-            });
-          }
+          this.ngZone.run(() => {
+            try {
+              const data: TranscriptionMessage = JSON.parse(event.data);
+              if (data.type !== 'ack') {
+                this.transcriptionSubject.next(data);
+              }
+            } catch {
+              this.transcriptionSubject.next({
+                type: 'transcription',
+                text: event.data,
+                timestamp: new Date().toISOString()
+              });
+            }
+          });
         };
-        
+
         this.ws.onerror = (error) => {
           console.error('WebSocket error:', error);
           reject(error);
         };
-        
-        this.ws.onclose = () => {
-          this.connectionStatus.next(false);
-          console.log('WebSocket disconnected');
+
+        this.ws.onclose = (event) => {
+          this.ngZone.run(() => {
+            this.connectionStatus.next(false);
+            if (event.code === 4001) {
+              this.transcriptionSubject.next({
+                type: 'error',
+                message: 'Session expired. Please log in again.',
+                timestamp: new Date().toISOString()
+              });
+            }
+          });
         };
       } catch (error) {
         reject(error);
@@ -66,24 +87,35 @@ export class WebsocketTranscriptionService {
     });
   }
 
-  sendAudio(audioData: ArrayBuffer | string): void {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      // Send binary data directly (like the reference HTML)
-      if (audioData instanceof ArrayBuffer) {
-        console.log(`Sending audio data: ${audioData.byteLength} bytes`);
-        this.ws.send(audioData);
-      } else {
-        // If it's base64 string, convert to ArrayBuffer
-        const binaryString = atob(audioData);
-        const bytes = new Uint8Array(binaryString.length);
-        for (let i = 0; i < binaryString.length; i++) {
-          bytes[i] = binaryString.charCodeAt(i);
-        }
-        console.log(`Sending audio data: ${bytes.buffer.byteLength} bytes`);
-        this.ws.send(bytes.buffer);
+  sendAudio(audioData: ArrayBuffer): void {
+    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
+      console.warn('WS not open, readyState:', this.ws?.readyState);
+      return;
+    }
+    const sessionId = this.sessionId;
+    if (!sessionId) {
+      console.warn('No sessionId on WS service');
+      return;
+    }
+
+    try {
+      // Chunked encoding avoids call-stack overflow on large buffers
+      const bytes = new Uint8Array(audioData);
+      let binary = '';
+      const CHUNK = 0x8000; // 32 KB slices
+      for (let i = 0; i < bytes.length; i += CHUNK) {
+        binary += String.fromCharCode(...bytes.subarray(i, Math.min(i + CHUNK, bytes.length)));
       }
-    } else {
-      console.warn('WebSocket is not open. ReadyState:', this.ws?.readyState);
+      const base64 = btoa(binary);
+
+      this.ws.send(JSON.stringify({
+        audio: base64,
+        timestamp: new Date().toISOString(),
+        session_id: sessionId
+      }));
+      console.log(`[WS] sent ${audioData.byteLength} bytes → ${base64.length} b64 chars (session: ${sessionId})`);
+    } catch (err) {
+      console.error('[WS] audio encode/send failed:', err);
     }
   }
 
@@ -92,9 +124,6 @@ export class WebsocketTranscriptionService {
       this.ws.close();
       this.ws = null;
     }
-  }
-
-  private generateSessionId(): string {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    this.sessionId = null;
   }
 }

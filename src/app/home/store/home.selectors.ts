@@ -7,6 +7,11 @@ export const selectSessionId = createSelector(
   selectHomeState,
   (state) => state.sessionId
 );
+
+export const selectSessionStarting = createSelector(
+  selectHomeState,
+  (state) => state.starting
+);
 export const selectHomePosition = createSelector(
   selectHomeState,
   (state) => state.position

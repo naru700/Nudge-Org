@@ -15,9 +15,9 @@
     <button
       type="submit"
       pButton
-      label="Send"
+      [label]="cooldown ? 'Wait...' : 'Send'"
       class="p-button-primary"
-      [disabled]="!userQuestion.trim() || loading"
+      [disabled]="!userQuestion.trim() || loading || cooldown"
     ></button>
   </div>
 </form>

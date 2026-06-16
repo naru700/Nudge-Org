@@ -50,7 +50,7 @@
     <p *ngFor="let line of transcriptLines; let i = index" 
        [class.latest-transcript]="i === transcriptLines.length - 1 && currentTranscript">{{ line }}</p>
     <p *ngIf="!transcriptLines.length">
-      Click "Start Mic" to transcribe your voice or "Share Screen + Audio" to transcribe interview audio...
+      Click "Start Mic" to transcribe your voice or "Share Screen + Audio" to transcribe meeting audio...
     </p>
   </div>
   

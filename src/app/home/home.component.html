@@ -2,14 +2,13 @@
   <div class="home-content">
     <div class="setup-card">
       <div class="card-header">
-        <h1 class="app-logo">Nudge</h1>
-        <h2 class="page-title">Interview Setup</h2>
-        <p class="page-subtitle">Configure your mock interview session</p>
+        <h1 class="page-title">Meeting Setup</h1>
+        <p class="page-subtitle">Configure your meeting session</p>
       </div>
 
       <form class="setup-form">
         <div class="form-group">
-          <label for="position">Interview Position</label>
+          <label for="position">Role / Position</label>
           <input id="position" type="text" pInputText placeholder="e.g. Business Analyst" [(ngModel)]="form.position"
             name="position" class="form-control" />
         </div>
@@ -17,11 +16,11 @@
         <div class="form-group">
           <label for="llm">Select Language Model</label>
           <p-dropdown id="llm" [options]="models" [(ngModel)]="selectedModel" placeholder="Select Model" name="llm"
-            styleClass="w-100" class="form-control"></p-dropdown>
+            styleClass="nudge-dropdown"></p-dropdown>
         </div>
 
         <div class="form-group">
-          <label for="prompt">Interview Prompt</label>
+          <label for="prompt">Meeting Prompt</label>
           <textarea id="prompt" rows="5" pInputTextarea placeholder="Choose a prompt..." [(ngModel)]="form.prompt"
             name="prompt" class="form-control"></textarea>
         </div>
@@ -33,8 +32,17 @@
         </div>
 
         <div class="action-area">
-          <button pButton type="button" label="Start Interview" icon="pi pi-play" class="start-btn"
-            (click)="startSession()"></button>
+          <button pButton type="button"
+            [label]="(starting$ | async) ? 'Starting...' : 'Start Meeting'"
+            [icon]="(starting$ | async) ? 'pi pi-spin pi-spinner' : 'pi pi-play'"
+            class="start-btn"
+            [disabled]="(starting$ | async) || !form.position.trim() || !form.prompt.trim() || !selectedModel"
+            (click)="startSession()">
+          </button>
+        </div>
+
+        <div *ngIf="error$ | async as error" class="session-error">
+          {{ error }}
         </div>
       </form>
     </div>

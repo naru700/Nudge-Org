@@ -1,5 +1,5 @@
 <div class="session-layout">
   <app-transcript-panel class="panel transcript"></app-transcript-panel>
   <app-answer-panel class="panel answer"></app-answer-panel>
-  <app-history-panel class="panel history"></app-history-panel>
+  <app-history-panel class="panel history" (questionSelected)="onQuestionSelected($event)"></app-history-panel>
 </div>

@@ -12,6 +12,13 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-  return this.http.post<{ access_token: string }>(`${environment.apiBaseUrl}/login`, { email, password });
-}
+    return this.http.post<{ access_token: string }>(`${environment.apiBaseUrl}/login`, { email, password });
+  }
+
+  getMe() {
+    return this.http.get<{ user_id: string; name: string; email: string; credits: number }>(
+      `${environment.apiBaseUrl}/me`,
+      { headers: { 'X-Silent': '1' } }
+    );
+  }
 }

@@ -32,3 +32,8 @@ export const selectAuthToken = createSelector(
   selectAuthState,
   (state) => state.token
 );
+
+export const selectCredits = createSelector(
+  selectAuthState,
+  (state) => state.credits
+);

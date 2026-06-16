@@ -14,3 +14,5 @@ export const startSessionFailure = createAction(
   '[Home] Session Started Failure',
   props<{ error: string }>()
 );
+
+export const clearSession = createAction('[Home] Clear Session');

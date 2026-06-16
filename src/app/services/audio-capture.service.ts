@@ -42,11 +42,11 @@ export class AudioCaptureService {
           const arrayBuffer = await audioBlob.arrayBuffer();
           
           // Only send if there's substantial audio data (> 5KB to avoid sending silence)
-          if (arrayBuffer.byteLength > 5120) {
-            console.log(`✅ Sending mic audio to server: ${arrayBuffer.byteLength} bytes`);
+          if (arrayBuffer.byteLength > 1000) {
+            console.log(`[Mic] sending ${arrayBuffer.byteLength} bytes`);
             onAudioData(arrayBuffer);
           } else {
-            console.log(`⏭️ Skipping silent mic audio chunk: ${arrayBuffer.byteLength} bytes`);
+            console.log(`[Mic] skipping tiny chunk: ${arrayBuffer.byteLength} bytes`);
           }
           
           this.audioChunks = [];
@@ -57,16 +57,16 @@ export class AudioCaptureService {
         this.recordingStatus.next(true);
       };
 
-      // Record in chunks (send every 10 seconds for better sentence detection)
+      // 3-second chunks give the server-side VAD enough granularity to detect sentence boundaries
       this.mediaRecorder.start();
       const chunkInterval = setInterval(() => {
         if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
           this.mediaRecorder.stop();
-          this.mediaRecorder.start(); // Start new chunk
+          this.mediaRecorder.start();
         } else {
           clearInterval(chunkInterval);
         }
-      }, 10000); // 10 second chunks for better sentence boundaries
+      }, 3000);
 
       // Store interval for cleanup
       (this.mediaRecorder as any).chunkInterval = chunkInterval;

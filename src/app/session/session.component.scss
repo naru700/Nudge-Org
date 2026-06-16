@@ -1,32 +1,19 @@
 .session-layout {
   display: flex;
-  height: calc(100vh - 4rem); // Adjust based on header height
+  height: calc(100vh - 4rem);
   gap: 1rem;
-  padding: 0.5rem 1rem 1rem; // Removed top padding
+  padding: 0.5rem 1rem 1rem;
   overflow-y: auto;
 }
 
 .panel {
   padding: 1rem;
-  margin: 0; // Make sure no extra margin is added
-  border-radius: 8px;
-  background: white;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-md);
+  background: var(--clr-surface);
+  box-shadow: var(--shadow-sm);
   overflow-y: auto;
 }
 
-
-.transcript {
-  flex: 1; // 25%
-  background-color: #f5faff;
-}
-
-.answer {
-  flex: 2; // 50%
-  background-color: #fefefe;
-}
-
-.history {
-  flex: 1; // 25%
-  background-color: #f9f9f9;
-}
+.transcript { flex: 1; background: var(--clr-surface-alt); }
+.answer     { flex: 2; background: var(--clr-surface); }
+.history    { flex: 1; background: var(--clr-surface-alt); }

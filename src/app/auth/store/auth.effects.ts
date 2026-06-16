@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import * as AuthActions from './auth.actions';
+import * as HomeActions from '../../home/store/home.actions';
 import { AuthService } from '../services/auth.service';
-import { catchError, map, mergeMap, of } from 'rxjs';
+import { SessionService } from '../../shared/services/session.service';
+import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
 
 @Injectable()
 export class AuthEffects {
@@ -45,12 +48,30 @@ export class AuthEffects {
     )
   );
 
+  loadCredits$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginUserSuccess),
+      switchMap(() =>
+        this.authService.getMe().pipe(
+          map(me => AuthActions.setCredits({ credits: me.credits })),
+          catchError((err) => {
+            console.error('[loadCredits] /me failed:', err?.status, err?.error);
+            return of();
+          })
+        )
+      )
+    )
+  );
+
   logoutUser$ = createEffect(
   () =>
     this.actions$.pipe(
       ofType(AuthActions.logoutUser),
       map(() => {
         localStorage.removeItem('access_token');
+        localStorage.removeItem('session_id');
+        this.sessionService.clearHistory();
+        this.store.dispatch(HomeActions.clearSession());
       })
     ),
   { dispatch: false }
@@ -58,5 +79,10 @@ export class AuthEffects {
 
   
   
-  constructor(private actions$: Actions, private authService: AuthService) {}
+  constructor(
+    private actions$: Actions,
+    private authService: AuthService,
+    private sessionService: SessionService,
+    private store: Store
+  ) {}
 }

@@ -30,3 +30,6 @@ export const loginUserFailure = createAction(
 );
 
 export const logoutUser = createAction('[Auth] Logout User');
+
+export const setCredits = createAction('[Auth] Set Credits', props<{ credits: number }>());
+export const decrementCredits = createAction('[Auth] Decrement Credits');

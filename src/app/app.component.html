@@ -1,13 +1,17 @@
 <header class="app-header">
   <h2>Nudge</h2>
-  <button
-    *ngIf="loggedIn$ | async"
-    pButton
-    type="button"
-    label="Logout"
-    class="logout-btn"
-    (click)="logout()"
-  ></button>
+  <div *ngIf="loggedIn$ | async" class="header-right">
+    <span class="credits-badge">
+      {{ (credits$ | async) !== null ? ((credits$ | async) + ' credits') : '...' }}
+    </span>
+    <button
+      pButton
+      type="button"
+      label="Logout"
+      class="logout-btn"
+      (click)="logout()"
+    ></button>
+  </div>
 </header>
 
 <main class="app-main">

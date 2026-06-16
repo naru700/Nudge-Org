@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { ButtonGroupModule } from 'primeng/buttongroup';
 import * as AuthActions from './auth/store/auth.actions';
 import * as AuthSelectors from './auth/store/auth.selectors';
+import { BadgeModule } from 'primeng/badge';
 import { Router } from '@angular/router';
 import { AuthInitService } from './auth/services/auth-init.service';
 import { SessionInitService } from './home/services/session-init.service';
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ButtonModule, ButtonGroupModule, CommonModule],
+  imports: [RouterOutlet, ButtonModule, ButtonGroupModule, CommonModule, BadgeModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -21,7 +22,8 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   title = 'nudge-app';
 
-   loggedIn$ = this.store.pipe(select(AuthSelectors.selectLoggedIn));
+  loggedIn$ = this.store.pipe(select(AuthSelectors.selectLoggedIn));
+  credits$ = this.store.pipe(select(AuthSelectors.selectCredits));
 
   constructor(private store: Store, private router: Router, authInit: AuthInitService, sessionInit: SessionInitService) 
   {
